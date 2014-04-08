@@ -1,0 +1,26 @@
+ModCom<-function(mod,formula=NULL){
+  if(!is.null(formula)){
+    cat("<-- No fomulea provided, Summary of current model is shown only.  -->","\n")
+    print(summary(mod)
+    return()
+  }
+  else{
+    mod.new<-update(mode,formula)
+    mod1<-mod
+    mod2<-mod.new
+  }
+  
+  if(mod$df.residual<mod.new$df.residual){
+    cat("Degree of freedom of the original model:",mod$df.residual)
+    cat(" is small than the new:",mod.new$df.residual,"\n")
+    mod1<-mod.new
+    mod2<-mod
+  }
+  
+  cat("<-- Models Compare -->","\n")
+  anova.val<-anova(mod,mod.new)
+  print(anova.val)
+  p.val<- 1-pchisq(anova.val$Deviance[2],anova.val$Df[2])
+  cat("Compare the 2 models (p-value): ",p.val,"\n")
+  return(mod.new)
+}
