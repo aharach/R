@@ -1,0 +1,17 @@
+DetNA<-function(data,xvar=NULL){
+  RetDt<-data.frame()
+  if(!is.null(xvar)){
+    RetDt<-data.frame(xvar,class(data[,xvar]),length(data[is.na(data[,xvar]),xvar]))
+  }
+  else{
+    for(i in 1:dim(data)[2]){
+      na.lg<-length(data[is.na(data[,i]),i])
+      if(na.lg>0){
+        na.tmp<-data.frame(colnames(data)[i],class(data[,i]),na.lg)
+        RetDt<-rbind(RetDt,na.tmp)
+      }
+    }
+  }
+  colnames(RetDt)<-c("Vaiable Name","Variable Type","Number of NA")
+  return(RetDt)
+}
